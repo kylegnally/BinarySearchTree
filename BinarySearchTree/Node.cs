@@ -5,58 +5,24 @@ namespace BinarySearchTree
 {
     public class Node<T>
     {
-        private T el;
-        private Node<T> left;
-        private Node<T> right;
-
         public Node(T element)
         {
-            el = element;
-            left = null;
-            right = null;
+            Element = element;
+            Left = null;
+            Right = null;
         }
 
-        public T Element
-        {
-            get
-            {
-                return el;
-            }
-            set
-            {
-                el = value;
-            }
-        }
+        public T Element { get; set; }
 
-        public Node<T> Left
-        {
-            get
-            {
-                return left;
-            }
-            set
-            {
-                left = value;
-            }
-        }
+        public Node<T> Left { get; set; }
 
-        public Node<T> Right
-        {
-            get
-            {
-                return right;
-            }
-            set
-            {
-                right = value;
-            }
-        }
+        public Node<T> Right { get; set; }
 
         public Boolean isLeaf
         {
             get
             {
-                return left == null && right == null;
+                return Left == null && Right == null;
             }
         }
     }
