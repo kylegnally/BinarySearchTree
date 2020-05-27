@@ -9,8 +9,12 @@ namespace BinarySearchTree
         LeftChild, RightChild, Parent, Root
     }
 
+    
+
     public class Tree<T>
     {
+        private Node<T> root;
+        private Node<T> current;
         public Tree()
         {
             RootNode = null;
@@ -94,49 +98,38 @@ namespace BinarySearchTree
 
         public Boolean Insert(T value, Relative relative)
         {
-            //Boolean inserted = true;
-            //Node<T> newNode = new Node<T>(value);
+            Boolean inserted = true;
+            Node<T> newNode = new Node<T>(value);
 
-            //// if (we are already on the left child AND it already has data) OR (we are already on the right child AND it already has data)
-            //if ((relative == Relative.LeftChild && CurrentNode.Left != null) ||
-            //      relative == Relative.RightChild && CurrentNode.Right != null)
-            //{
-            //    // we insert nothing
-            //    inserted = false;
-            //}
-            //else
-            //{   // if the relative we were passed equals the one stored in the left child
-            //    if (relative == Relative.LeftChild)
-            //    {
-            //        // make the left child of the current node equal to the value that was passed in
-            //        CurrentNode.Left = newNode;
-            //    }
-            //    // if the relative we were passed equals the one stored in the right child
-            //    else if (relative == Relative.RightChild)
-            //    {
-            //        // make the right child of the current node equal to the value that was passed in
-            //        CurrentNode.Right = newNode;
-            //    }
-            //    // if the relative we were passed equals the one stored in the relative root 
-            //    else if (relative == Relative.Root)
-            //    {
-            //        // if the value ofr the relative that was passed in is null
-            //        if (RootNode == null)
-            //        {
-            //            // set the root node equal to the value of the new node we created above
-            //            RootNode = newNode;
-            //        }
-            //        // set CurrentNodce's value equal to that of the RootNode
-            //        CurrentNode = RootNode;
-            //    }
-            //}
+            if (relative == Relative.LeftChild && current.Left != null ||
+                relative == Relative.RightChild && current.Right != null)
+            {
+                inserted = false;
+            }
+            else
+            {
+                if (relative == Relative.LeftChild)
+                {
+                    current.Left = newNode;
+                }
+                else if (relative == Relative.RightChild)
+                {
+                    current.Right = newNode;
+                }
+                else if (relative == Relative.Root)
+                {
+                    if (root == null)
+                    {
+                        root = newNode;
+                    }
+                    current = root;
+                }
+            }
 
-            //// increase the value of Size if we did an insert
-            //if (inserted)
-            //    TreeSize++;
+            if (inserted)
+                TreeSize++;
 
-            //// return the flag
-            //return inserted;
+            return inserted;
         }
 
         public Boolean Insert(Node<T> treeNode, Relative relative)
