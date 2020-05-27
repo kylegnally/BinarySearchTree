@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Channels;
 
 namespace BinarySearchTree
 {
@@ -12,20 +13,20 @@ namespace BinarySearchTree
     {
         public Tree()
         {
-            Root = null;
-            Current = null;
-            Size = 0;
+            RootNode = null;
+            CurrentNode = null;
+            TreeSize = 0;
         }
 
-        public int Size { get; private set; }
+        public int TreeSize { get; private set; }
 
-        public Node<T> Current { get; private set; }
+        public Node<T> CurrentNode { get; private set; }
 
-        public Node<T> Root { get; private set; }
+        public Node<T> RootNode { get; private set; }
 
         public Boolean isEmpty
         {
-            get => Root == null;
+            get => RootNode == null;
         }
 
         public Boolean moveTo(Relative relative)
@@ -36,34 +37,34 @@ namespace BinarySearchTree
             switch (relative)
             {
                 case Relative.LeftChild:
-                    if (Current.Left != null)
+                    if (CurrentNode.Left != null)
                     {
-                        Current = Current.Left;
+                        CurrentNode = CurrentNode.Left;
                         found = true;
                     }
 
                     break;
 
                 case Relative.RightChild:
-                    if (Current.Right != null)
+                    if (CurrentNode.Right != null)
                     {
-                        Current = Current.Right;
+                        CurrentNode = CurrentNode.Right;
                         found = true;
                     }
                     break;
 
                 case Relative.Root:
-                    if (Root != null)
+                    if (RootNode != null)
                     {
-                        Current = Root;
+                        CurrentNode = RootNode;
                         found = true;
                     }
                     break;
 
                 case Relative.Parent:
-                    if (Current != Root)
+                    if (CurrentNode != RootNode)
                     {
-                        Current = findParent(Current);
+                        CurrentNode = findParent(CurrentNode);
                         found = true;
                     }
                     break;
@@ -75,7 +76,7 @@ namespace BinarySearchTree
         public Node<T> findParent(Node<T> node)
         {
             Stack<Node<T>> s = new Stack<Node<T>>();
-            Node<T> n = Root;
+            Node<T> n = RootNode;
 
             while (n.Left != node && n.Right != node)
             {
@@ -93,38 +94,49 @@ namespace BinarySearchTree
 
         public Boolean Insert(T value, Relative relative)
         {
-            Boolean inserted = true;
-            Node<T> newNode = new Node<T>(value);
+            //Boolean inserted = true;
+            //Node<T> newNode = new Node<T>(value);
 
-            if ((relative == Relative.LeftChild && Current.Left != null) ||
-                  relative == Relative.RightChild && Current.Right != null)
-            {
-                inserted = false;
-            }
-            else
-            {
-                if (relative == Relative.LeftChild)
-                {
-                    Current.Left = newNode;
-                }
-                else if (relative == Relative.RightChild)
-                {
-                    Current.Right = newNode;
-                }
-                else if (relative == Relative.Root)
-                {
-                    if (Root == null)
-                    {
-                        Root = newNode;
-                    }
-                    Current = Root;
-                }
-            }
+            //// if (we are already on the left child AND it already has data) OR (we are already on the right child AND it already has data)
+            //if ((relative == Relative.LeftChild && CurrentNode.Left != null) ||
+            //      relative == Relative.RightChild && CurrentNode.Right != null)
+            //{
+            //    // we insert nothing
+            //    inserted = false;
+            //}
+            //else
+            //{   // if the relative we were passed equals the one stored in the left child
+            //    if (relative == Relative.LeftChild)
+            //    {
+            //        // make the left child of the current node equal to the value that was passed in
+            //        CurrentNode.Left = newNode;
+            //    }
+            //    // if the relative we were passed equals the one stored in the right child
+            //    else if (relative == Relative.RightChild)
+            //    {
+            //        // make the right child of the current node equal to the value that was passed in
+            //        CurrentNode.Right = newNode;
+            //    }
+            //    // if the relative we were passed equals the one stored in the relative root 
+            //    else if (relative == Relative.Root)
+            //    {
+            //        // if the value ofr the relative that was passed in is null
+            //        if (RootNode == null)
+            //        {
+            //            // set the root node equal to the value of the new node we created above
+            //            RootNode = newNode;
+            //        }
+            //        // set CurrentNodce's value equal to that of the RootNode
+            //        CurrentNode = RootNode;
+            //    }
+            //}
 
-            if (inserted)
-                Size++;
+            //// increase the value of Size if we did an insert
+            //if (inserted)
+            //    TreeSize++;
 
-            return inserted;
+            //// return the flag
+            //return inserted;
         }
 
         public Boolean Insert(Node<T> treeNode, Relative relative)
@@ -132,8 +144,8 @@ namespace BinarySearchTree
             Boolean inserted = true;
             Node<T> newNode = new Node<T>(treeNode.Element);
 
-            if ((relative == Relative.LeftChild && Current.Left != null) ||
-                  relative == Relative.RightChild && Current.Right != null)
+            if ((relative == Relative.LeftChild && CurrentNode.Left != null) ||
+                  relative == Relative.RightChild && CurrentNode.Right != null)
             {
                 inserted = false;
             }
@@ -141,24 +153,24 @@ namespace BinarySearchTree
             {
                 if (relative == Relative.LeftChild)
                 {
-                    Current.Left = newNode;
+                    CurrentNode.Left = newNode;
                 }
                 else if (relative == Relative.RightChild)
                 {
-                    Current.Right = newNode;
+                    CurrentNode.Right = newNode;
                 }
                 else if (relative == Relative.Root)
                 {
-                    if (Root == null)
+                    if (RootNode == null)
                     {
-                        Root = newNode;
+                        RootNode = newNode;
                     }
-                    Current = Root;
+                    CurrentNode = RootNode;
                 }
             }
 
             if (inserted)
-                Size++;
+                TreeSize++;
 
             return inserted;
         }
@@ -171,7 +183,7 @@ namespace BinarySearchTree
                 Destroy(node.Left);
                 Destroy(node.Right);
                 node = null;
-                Size--;
+                TreeSize--;
             }
         }
 
