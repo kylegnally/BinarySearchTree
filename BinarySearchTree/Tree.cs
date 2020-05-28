@@ -100,7 +100,7 @@ namespace BinarySearchTree
         {
             Boolean inserted = true;
             Node<T> newNode = new Node<T>(value);
-
+            
             if (relative == Relative.LeftChild && current.Left != null ||
                 relative == Relative.RightChild && current.Right != null)
             {
