@@ -5,6 +5,10 @@ namespace BinarySearchTree
 {
     public class Node<T>
     {
+
+        private T el;
+        private Node<T> left;
+        private Node<T> right;
         public Node(T element)
         {
             Element = element;

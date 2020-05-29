@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Channels;
 
 namespace BinarySearchTree
 {
@@ -9,66 +8,63 @@ namespace BinarySearchTree
         LeftChild, RightChild, Parent, Root
     }
 
-    
-
     public class Tree<T>
     {
         private Node<T> root;
         private Node<T> current;
         public Tree()
         {
-            RootNode = null;
-            CurrentNode = null;
+            Root = null;
+            Current = null;
             TreeSize = 0;
         }
 
         public int TreeSize { get; private set; }
 
-        public Node<T> CurrentNode { get; private set; }
+        public Node<T> Current { get; private set; }
 
-        public Node<T> RootNode { get; private set; }
+        public Node<T> Root { get; private set; }
 
         public Boolean isEmpty
         {
-            get => RootNode == null;
+            get => Root == null;
         }
 
         public Boolean moveTo(Relative relative)
         {
             Boolean found = false;
 
-
             switch (relative)
             {
                 case Relative.LeftChild:
-                    if (CurrentNode.Left != null)
+                    if (current.Left != null)
                     {
-                        CurrentNode = CurrentNode.Left;
+                        current = current.Left;
                         found = true;
                     }
 
                     break;
 
                 case Relative.RightChild:
-                    if (CurrentNode.Right != null)
+                    if (current.Right != null)
                     {
-                        CurrentNode = CurrentNode.Right;
+                        current = current.Right;
                         found = true;
                     }
                     break;
 
                 case Relative.Root:
-                    if (RootNode != null)
+                    if (root != null)
                     {
-                        CurrentNode = RootNode;
+                        current = root;
                         found = true;
                     }
                     break;
 
                 case Relative.Parent:
-                    if (CurrentNode != RootNode)
+                    if (current != root)
                     {
-                        CurrentNode = findParent(CurrentNode);
+                        current = findParent(current);
                         found = true;
                     }
                     break;
@@ -80,7 +76,7 @@ namespace BinarySearchTree
         public Node<T> findParent(Node<T> node)
         {
             Stack<Node<T>> s = new Stack<Node<T>>();
-            Node<T> n = RootNode;
+            Node<T> n = Root;
 
             while (n.Left != node && n.Right != node)
             {
@@ -96,12 +92,31 @@ namespace BinarySearchTree
             return n;
         }
 
+        public Node<T> AddNode(T value)
+        {
+            Stack<Node<T>> nodeStack = new Stack<Node<T>>();
+            Node<T> n = Root;
+
+            while (!Equals(value))
+            {
+                string s = n.Element.ToString();
+                if (s == value.ToString())
+                {
+                    Console.WriteLine("Found {0) at node: {1}", s, n);
+                    return n;
+                }
+                return null;
+            }
+            Console.WriteLine("No matching items appear in the tree.");
+            return null;
+        }
+
         public Boolean Insert(T value, Relative relative)
         {
             Boolean inserted = true;
             Node<T> newNode = new Node<T>(value);
-            
-            if (relative == Relative.LeftChild && current.Left != null ||
+
+            if ((relative == Relative.LeftChild && current.Left != null) ||
                 relative == Relative.RightChild && current.Right != null)
             {
                 inserted = false;
@@ -122,6 +137,7 @@ namespace BinarySearchTree
                     {
                         root = newNode;
                     }
+
                     current = root;
                 }
             }
@@ -132,13 +148,18 @@ namespace BinarySearchTree
             return inserted;
         }
 
+        public int Size()
+        {
+            return TreeSize;
+        }
+
         public Boolean Insert(Node<T> treeNode, Relative relative)
         {
             Boolean inserted = true;
             Node<T> newNode = new Node<T>(treeNode.Element);
 
-            if ((relative == Relative.LeftChild && CurrentNode.Left != null) ||
-                  relative == Relative.RightChild && CurrentNode.Right != null)
+            if ((relative == Relative.LeftChild && Current.Left != null) ||
+                  relative == Relative.RightChild && Current.Right != null)
             {
                 inserted = false;
             }
@@ -146,19 +167,19 @@ namespace BinarySearchTree
             {
                 if (relative == Relative.LeftChild)
                 {
-                    CurrentNode.Left = newNode;
+                    Current.Left = newNode;
                 }
                 else if (relative == Relative.RightChild)
                 {
-                    CurrentNode.Right = newNode;
+                    Current.Right = newNode;
                 }
                 else if (relative == Relative.Root)
                 {
-                    if (RootNode == null)
+                    if (Root == null)
                     {
-                        RootNode = newNode;
+                        Root = newNode;
                     }
-                    CurrentNode = RootNode;
+                    Current = Root;
                 }
             }
 
@@ -167,7 +188,6 @@ namespace BinarySearchTree
 
             return inserted;
         }
-
 
         public void Destroy(Node<T> node)
         {
@@ -180,34 +200,33 @@ namespace BinarySearchTree
             }
         }
 
+        public override string ToString()
+        {
+            return Current.Element.ToString();
+        }
+
         public void InOrder(Node<T> node)
         {
-            if (node != null)
-            {
-                InOrder(node.Left);
-                Console.Write(node.Element.ToString());
-                InOrder(node.Right);
-            }
+            if (node == null) return;
+            InOrder(node.Left);
+            Console.Write(node.Element.ToString());
+            InOrder(node.Right);
         }
 
         public void PreOrder(Node<T> node)
         {
-            if (node != null)
-            {
-                Console.Write(node.Element.ToString());
-                PreOrder(node.Left);
-                PreOrder(node.Right);
-            }
+            if (node != null) return;
+            Console.Write(node.Element);
+            PreOrder(node.Left);
+            PreOrder(node.Right);
         }
 
         public void PostOrder(Node<T> node)
         {
-            if (node != null)
-            {
-                PostOrder(node.Left);
-                PostOrder(node.Right);
-                Console.Write(node.Element.ToString());
-            }
+            if (node == null) return;
+            PostOrder(node.Left);
+            PostOrder(node.Right);
+            Console.Write(node.Element.ToString());
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace BinarySearchTree
 {
     class Program
     {
-
+        /// <summary>
+        /// Main method.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Tree<string> bt = new Tree<string>();
@@ -31,24 +32,31 @@ namespace BinarySearchTree
             bt.moveTo(Relative.RightChild);
 
             bt.Insert("G", Relative.LeftChild);
-            bt.moveTo(Relative.Root);
             Console.WriteLine("Size: {0}", bt.TreeSize);
-
+            bt.moveTo(Relative.Root);
+            //Console.WriteLine("Current Element: {0}", Relative.Root.ToString());
+            
             Console.WriteLine("Preorder Traversal");
-            bt.PreOrder(bt.RootNode);
+            bt.PreOrder(bt.Root);
             Console.WriteLine("\n");
 
             Console.WriteLine("Inorder Traversal");
-            bt.InOrder(bt.RootNode);
+            bt.InOrder(bt.Root);
             Console.WriteLine("\n");
 
             Console.WriteLine("Postorder Traversal");
-            bt.PostOrder(bt.RootNode);
+            bt.PostOrder(bt.Root);
             Console.WriteLine("\n");
 
             bt.moveTo(Relative.Root);
             bt.moveTo(Relative.RightChild);
             Console.WriteLine("Done.");
+
+            Console.WriteLine(bt.Current);
+            bt.moveTo(Relative.LeftChild);
+            bt.moveTo(Relative.LeftChild);
+            Console.WriteLine(bt.Current);
+
             Environment.Exit(0);
         }
     }
