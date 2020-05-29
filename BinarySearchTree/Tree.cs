@@ -185,7 +185,7 @@ namespace BinarySearchTree
                     {
                         Root = newNode;
                     }
-                    Current = Root;
+                    current = Root;
                 }
             }
 
