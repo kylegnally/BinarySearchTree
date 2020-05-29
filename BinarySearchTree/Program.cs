@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.Data;
 
 namespace BinarySearchTree
 {
@@ -10,36 +12,62 @@ namespace BinarySearchTree
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            // these are used to decide whether to see 
+            // parts of the assignment that were required
+            // on the handout.
+            bool userChoice;
+            string choice;
+
             Tree<string> bt = new Tree<string>();
 
-            //Console.WriteLine("Enter a series of values to add to the tree, separated by commas: ");
+            // I tried to use an array to store the characters and then 
+            // iterate through these. I feel like the list of tree elements
+            // could be entered by the user in a line, like:
+            //          a,b,s,d,f,e,g
+            // and read from that array, but I couldn't get it to work in a
+            // way that would make writing that code worth the effort.
+            //Console.WriteLine("Enter a series of values to add to the tree,
+            //separated by commas: ");
 
             bt.moveTo(Relative.Root);
 
-            bt.Insert("A", Relative.Root);
-            bt.Insert("B", Relative.LeftChild);
-            bt.Insert("C", Relative.RightChild);
+            // This could be done differently, I think
+            // examples that use Add to add to a tree
+            bt.Add("A", Relative.Root);
+            bt.Add("B", Relative.LeftChild);
+            bt.Add("C", Relative.RightChild);
 
             bt.moveTo(Relative.LeftChild);
-            bt.Insert("D", Relative.LeftChild);
+            bt.Add("D", Relative.LeftChild);
             bt.moveTo(Relative.LeftChild);
 
-            bt.Insert("F", Relative.RightChild);
+            bt.Add("F", Relative.RightChild);
 
             bt.moveTo(Relative.Root);
             bt.moveTo(Relative.RightChild);
-            bt.Insert("E", Relative.RightChild);
+            bt.Add("E", Relative.RightChild);
             bt.moveTo(Relative.RightChild);
 
-            bt.Insert("G", Relative.LeftChild);
-            Console.WriteLine("Size: {0}", bt.Size);
+            bt.Add("G", Relative.LeftChild);
+
+            // let's go to the top of the tree and demonstrate 
+            // the other functions we wrote for the assignment!
             bt.moveTo(Relative.Root);
-            //Console.WriteLine("Current Element: {0}", Relative.Root.ToString());
-            
+
+            Console.WriteLine("Demonstration of Size method: ");
+            Console.WriteLine(bt.Size);
+
+            string addedNode;
+            Console.WriteLine("Demonstration of Add requirement. Please enter a key...\n");
+            Console.WriteLine("(You must enter a value of the same type as the text data):");
+            addedNode = Console.ReadLine();
+            bt.Add(addedNode, Relative.Root);
+            Console.WriteLine("Let's search for {0} as a value in a node! ", addedNode);
+
             Console.WriteLine("Preorder Traversal");
             bt.PreOrder(bt.Root);
             Console.WriteLine("\n");
-
+            
             Console.WriteLine("Inorder Traversal");
             bt.InOrder(bt.Root);
             Console.WriteLine("\n");
@@ -49,14 +77,7 @@ namespace BinarySearchTree
             Console.WriteLine("\n");
 
             bt.moveTo(Relative.Root);
-            bt.moveTo(Relative.RightChild);
-            Console.WriteLine("Done.");
-
-            Console.WriteLine(bt.Current);
-            bt.moveTo(Relative.LeftChild);
-            bt.moveTo(Relative.LeftChild);
-            Console.WriteLine(bt.Current);
-
+            
             Environment.Exit(0);
         }
     }

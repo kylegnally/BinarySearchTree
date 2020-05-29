@@ -127,12 +127,12 @@ namespace BinarySearchTree
         }
 
         /// <summary>
-        /// Insert method. Takes a T value and an enum named Relative. 
+        /// Add method. Takes a T value and an enum named Relative. 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="relative"></param>
         /// <returns>bool</returns>
-        public Boolean Insert(T value, Relative relative)
+        public Boolean Add(T value, Relative relative)
         {
             Boolean inserted = true;
             Node<T> newNode = new Node<T>(value);
@@ -169,45 +169,8 @@ namespace BinarySearchTree
             return inserted;
         }
 
-        /// <summary>
-        /// Second insert method wasn't used but is here, commented
-        /// </summary>
-        /// <param name="node"></param>
-        //public Boolean Insert(TreeNode<T> treeNode, Relative relative)
-        //{
-        //    Boolean inserted = true;
-        //    TreeNode<T> newNode = new TreeNode<T>(treeNode.Element);
-
-        //    if ((relative == Relative.LeftChild && current.Left != null) ||
-        //          relative == Relative.RightChild && current.Right != null)
-        //    {
-        //        inserted = false;
-        //    }
-        //    else
-        //    {
-        //        if (relative == Relative.LeftChild)
-        //        {
-        //            current.Left = newNode;
-        //        }
-        //        else if (relative == Relative.RightChild)
-        //        {
-        //            current.Right = newNode;
-        //        }
-        //        else if (relative == Relative.Root)
-        //        {
-        //            if (root == null)
-        //            {
-        //                root = newNode;
-        //            }
-        //            current = root;
-        //        }
-        //    }
-
-        //    if (inserted)
-        //        size++;
-
-        //    return inserted;
-        //}
+        
+        
 
         /// <summary>
         /// InOrder traversal method. 
