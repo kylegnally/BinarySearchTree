@@ -15,13 +15,19 @@ namespace BinarySearchTree
         public Tree()
         {
             Root = null;
-            Current = null;
+            current = null;
             TreeSize = 0;
         }
 
         public int TreeSize { get; private set; }
 
-        public Node<T> Current { get; private set; }
+        public Node<T> Current
+        {
+            get
+            {
+                return current;
+            }
+        }
 
         public Node<T> Root { get; private set; }
 
