@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace BinarySearchTree
 {
+
     public enum Relative
     {
         LeftChild, RightChild, Parent, Root
@@ -12,14 +13,22 @@ namespace BinarySearchTree
     {
         private Node<T> root;
         private Node<T> current;
+        private int size;
+
         public Tree()
         {
-            Root = null;
+            root = null;
             current = null;
-            TreeSize = 0;
+            size = 0;
         }
 
-        public int TreeSize { get; private set; }
+        public int Size
+        {
+            get
+            {
+                return size;
+            }
+        }
 
         public Node<T> Current
         {
@@ -29,13 +38,27 @@ namespace BinarySearchTree
             }
         }
 
-        public Node<T> Root { get; private set; }
+        public Node<T> Root
+        {
+            get
+            {
+                return root;
+            }
+        }
 
         public Boolean isEmpty
         {
-            get => Root == null;
+            get
+            {
+                return root == null;
+            }
         }
 
+        /// <summary>
+        /// Method to traverse to a child node, a root node, or a parent node.
+        /// </summary>
+        /// <param name="relative"></param>
+        /// <returns>bool</returns>
         public Boolean moveTo(Relative relative)
         {
             Boolean found = false;
@@ -79,10 +102,15 @@ namespace BinarySearchTree
             return found;
         }
 
+        /// <summary>
+        /// Method to find the parent of a node when given a node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>Returns a TreeNode<T>.</returns>
         public Node<T> findParent(Node<T> node)
         {
             Stack<Node<T>> s = new Stack<Node<T>>();
-            Node<T> n = Root;
+            Node<T> n = root;
 
             while (n.Left != node && n.Right != node)
             {
@@ -98,25 +126,12 @@ namespace BinarySearchTree
             return n;
         }
 
-        public Node<T> AddNode(T value)
-        {
-            Stack<Node<T>> nodeStack = new Stack<Node<T>>();
-            Node<T> n = Root;
-
-            while (!Equals(value))
-            {
-                string s = n.Element.ToString();
-                if (s == value.ToString())
-                {
-                    Console.WriteLine("Found {0) at node: {1}", s, n);
-                    return n;
-                }
-                return null;
-            }
-            Console.WriteLine("No matching items appear in the tree.");
-            return null;
-        }
-
+        /// <summary>
+        /// Insert method. Takes a T value and an enum named Relative. 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="relative"></param>
+        /// <returns>bool</returns>
         public Boolean Insert(T value, Relative relative)
         {
             Boolean inserted = true;
@@ -149,52 +164,83 @@ namespace BinarySearchTree
             }
 
             if (inserted)
-                TreeSize++;
+                size++;
 
             return inserted;
         }
 
-        public int Size()
+        /// <summary>
+        /// Second insert method wasn't used but is here, commented
+        /// </summary>
+        /// <param name="node"></param>
+        //public Boolean Insert(TreeNode<T> treeNode, Relative relative)
+        //{
+        //    Boolean inserted = true;
+        //    TreeNode<T> newNode = new TreeNode<T>(treeNode.Element);
+
+        //    if ((relative == Relative.LeftChild && current.Left != null) ||
+        //          relative == Relative.RightChild && current.Right != null)
+        //    {
+        //        inserted = false;
+        //    }
+        //    else
+        //    {
+        //        if (relative == Relative.LeftChild)
+        //        {
+        //            current.Left = newNode;
+        //        }
+        //        else if (relative == Relative.RightChild)
+        //        {
+        //            current.Right = newNode;
+        //        }
+        //        else if (relative == Relative.Root)
+        //        {
+        //            if (root == null)
+        //            {
+        //                root = newNode;
+        //            }
+        //            current = root;
+        //        }
+        //    }
+
+        //    if (inserted)
+        //        size++;
+
+        //    return inserted;
+        //}
+
+        /// <summary>
+        /// InOrder traversal method. 
+        /// </summary>
+        /// <param name="node"></param>
+        public void InOrder(Node<T> node)
         {
-            return TreeSize;
+            if (node != null)
+            {
+                InOrder(node.Left);
+                Console.Write(node.Element.ToString());
+                InOrder(node.Right);
+            }
         }
 
-        public Boolean Insert(Node<T> treeNode, Relative relative)
+        /// <summary>
+        /// Method for PreOrder traversal.
+        /// </summary>
+        /// <param name="node"></param>
+        public void PreOrder(Node<T> node)
         {
-            Boolean inserted = true;
-            Node<T> newNode = new Node<T>(treeNode.Element);
-
-            if ((relative == Relative.LeftChild && Current.Left != null) ||
-                  relative == Relative.RightChild && Current.Right != null)
+            if (node != null)
             {
-                inserted = false;
+                Console.Write(node.Element.ToString());
+                PreOrder(node.Left);
+                PreOrder(node.Right);
             }
-            else
-            {
-                if (relative == Relative.LeftChild)
-                {
-                    Current.Left = newNode;
-                }
-                else if (relative == Relative.RightChild)
-                {
-                    Current.Right = newNode;
-                }
-                else if (relative == Relative.Root)
-                {
-                    if (Root == null)
-                    {
-                        Root = newNode;
-                    }
-                    current = Root;
-                }
-            }
-
-            if (inserted)
-                TreeSize++;
-
-            return inserted;
         }
 
+        /// <summary>
+        /// Method to destroy a tree.
+        /// </summary>
+        /// <param name="node"></param>
         public void Destroy(Node<T> node)
         {
             if (node != null)
@@ -202,37 +248,22 @@ namespace BinarySearchTree
                 Destroy(node.Left);
                 Destroy(node.Right);
                 node = null;
-                TreeSize--;
+                size--;
             }
         }
 
-        public override string ToString()
-        {
-            return Current.Element.ToString();
-        }
-
-        public void InOrder(Node<T> node)
-        {
-            if (node == null) return;
-            InOrder(node.Left);
-            Console.Write(node.Element.ToString());
-            InOrder(node.Right);
-        }
-
-        public void PreOrder(Node<T> node)
-        {
-            if (node != null) return;
-            Console.Write(node.Element);
-            PreOrder(node.Left);
-            PreOrder(node.Right);
-        }
-
+        /// <summary>
+        /// Method for PostOrder traversal.
+        /// </summary>
+        /// <param name="node"></param>
         public void PostOrder(Node<T> node)
         {
-            if (node == null) return;
-            PostOrder(node.Left);
-            PostOrder(node.Right);
-            Console.Write(node.Element.ToString());
+            if (node != null)
+            {
+                PostOrder(node.Left);
+                PostOrder(node.Right);
+                Console.Write(node.Element.ToString());
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BinarySearchTree
         {
             Tree<string> bt = new Tree<string>();
 
-            Console.WriteLine("Enter a series of values to add to the tree, separated by commas: ");
+            //Console.WriteLine("Enter a series of values to add to the tree, separated by commas: ");
 
             bt.moveTo(Relative.Root);
 
@@ -32,7 +32,7 @@ namespace BinarySearchTree
             bt.moveTo(Relative.RightChild);
 
             bt.Insert("G", Relative.LeftChild);
-            Console.WriteLine("Size: {0}", bt.TreeSize);
+            Console.WriteLine("Size: {0}", bt.Size);
             bt.moveTo(Relative.Root);
             //Console.WriteLine("Current Element: {0}", Relative.Root.ToString());
             
