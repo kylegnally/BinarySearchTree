@@ -75,6 +75,7 @@ namespace BinarySearchTree
             //bt.Add(str, Relative.Root);
             
             Environment.Exit(0);
+
         }
     }
 }
