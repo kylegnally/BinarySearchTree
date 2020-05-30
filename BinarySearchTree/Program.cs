@@ -1,6 +1,5 @@
 ﻿using System;
-using System.CodeDom;
-using System.Data;
+using System.Globalization;
 
 namespace BinarySearchTree
 {
@@ -55,7 +54,7 @@ namespace BinarySearchTree
             bt.moveTo(Relative.Root);
 
             Console.WriteLine("Demonstration of Size method: ");
-            Console.WriteLine(bt.Size);
+            Console.WriteLine(bt.GetTreeSize(bt));
 
             Console.WriteLine("Preorder Traversal");
             bt.PreOrder(bt.Root);
@@ -68,19 +67,12 @@ namespace BinarySearchTree
             Console.WriteLine("Postorder Traversal");
             bt.PostOrder(bt.Root);
             Console.WriteLine("\n");
-
-            string elementToAdd;
-            Console.WriteLine("Demonstration of Add requirement. Please enter a key...\n");
-            Console.WriteLine("(You must enter a value of the same type as the text data):");
-            elementToAdd = Console.ReadLine();
-            bt.Add(elementToAdd, Relative.Root);
             bt.moveTo(Relative.Root);
-            bt.InOrder(bt.Root);
             
-
-            Console.WriteLine("Demonstrate the Size method: {0}", bt.GetTreeSize(bt) + "\n");
-
-            bt.moveTo(Relative.Root);
+            // I could not make this work!
+            //Console.WriteLine("Demonstration of Add requirement. Please enter a key...\n");
+            //string str = Console.ReadLine();
+            //bt.Add(str, Relative.Root);
             
             Environment.Exit(0);
         }

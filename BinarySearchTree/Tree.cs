@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BinarySearchTree
 {
-
+    // These made this material MUCH more difficult for me to understand.
     public enum Relative
     {
         LeftChild, RightChild, Parent, Root

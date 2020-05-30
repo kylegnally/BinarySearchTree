@@ -59,6 +59,5 @@ namespace BinarySearchTree
                 return left == null && right == null;
             }
         }
-
     }
 }
