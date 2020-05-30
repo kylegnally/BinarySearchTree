@@ -123,7 +123,6 @@ namespace BinarySearchTree
                 else
                     n = s.Pop();
             }
-            s.Clear();
             return n;
         }
 
@@ -206,21 +205,6 @@ namespace BinarySearchTree
                 Console.Write(node.Element.ToString());
                 PreOrder(node.Left);
                 PreOrder(node.Right);
-            }
-        }
-
-        /// <summary>
-        /// Method to destroy a tree.
-        /// </summary>
-        /// <param name="node"></param>
-        public void Destroy(Node<T> node)
-        {
-            if (node != null)
-            {
-                Destroy(node.Left);
-                Destroy(node.Right);
-                node = null;
-                size--;
             }
         }
 
