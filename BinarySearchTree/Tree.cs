@@ -169,8 +169,16 @@ namespace BinarySearchTree
             return inserted;
         }
 
-        
-        
+        public int GetTreeSize(Tree<T> aTree)
+        {
+            int size = aTree.Size;
+            return size;
+        }
+
+        //public bool FindNode(T value, Node<T> node)
+        //{
+        //    // I couldn't make anything I tried here actually work
+        //}
 
         /// <summary>
         /// InOrder traversal method. 

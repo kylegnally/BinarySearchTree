@@ -57,13 +57,6 @@ namespace BinarySearchTree
             Console.WriteLine("Demonstration of Size method: ");
             Console.WriteLine(bt.Size);
 
-            string addedNode;
-            Console.WriteLine("Demonstration of Add requirement. Please enter a key...\n");
-            Console.WriteLine("(You must enter a value of the same type as the text data):");
-            addedNode = Console.ReadLine();
-            bt.Add(addedNode, Relative.Root);
-            Console.WriteLine("Let's search for {0} as a value in a node! ", addedNode);
-
             Console.WriteLine("Preorder Traversal");
             bt.PreOrder(bt.Root);
             Console.WriteLine("\n");
@@ -75,6 +68,17 @@ namespace BinarySearchTree
             Console.WriteLine("Postorder Traversal");
             bt.PostOrder(bt.Root);
             Console.WriteLine("\n");
+
+            string elementToAdd;
+            Console.WriteLine("Demonstration of Add requirement. Please enter a key...\n");
+            Console.WriteLine("(You must enter a value of the same type as the text data):");
+            elementToAdd = Console.ReadLine();
+            bt.Add(elementToAdd, Relative.Root);
+            bt.moveTo(Relative.Root);
+            bt.InOrder(bt.Root);
+            
+
+            Console.WriteLine("Demonstrate the Size method: {0}", bt.GetTreeSize(bt) + "\n");
 
             bt.moveTo(Relative.Root);
             
